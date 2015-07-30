@@ -28,7 +28,7 @@ if __name__ == '__main__':
     response = raw_input("To binary or text (b/t): ")
     if response.lower() == 'b':
         output = toBinFrStr(string)
-        print output
+        print(output)
     else:
         output = toStrFrBin(string)
-        print output
+        print(output)
