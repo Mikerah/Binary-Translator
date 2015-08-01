@@ -3,11 +3,14 @@ from PyQt5.QtWidgets import QApplication, QWidget, QTextEdit,QLabel, \
 QPushButton, QVBoxLayout, QShortcut
 from PyQt5.QtGui import QKeySequence
 from binary import toStrFrBin
+from pyperclip import copy, paste
 
 class BinaryDecoder(QWidget):
 
     def __init__(self):
         super().__init__()
+        
+        #self.clipboard = QApplication.clipboard()
         
         self.initUI()
         
@@ -31,7 +34,7 @@ class BinaryDecoder(QWidget):
         self.binaryCopy = QShortcut(QKeySequence("Ctrl-C"), self.binaryEdit)
         self.binaryPaste = QShortcut(QKeySequence("Ctrl-V"), self.binaryEdit)
         self.textCopy = QShortcut(QKeySequence("Ctrl-C"), self.textEdit)
-        self.textPaste = QShortcut(QKeySequence("Ctrl-V"), self.textEdit)         
+        self.textPaste = QShortcut(QKeySequence("Ctrl-V"), self.textEdit) 
 
         self.setLayout(self.vbox)
     
@@ -40,22 +43,26 @@ class BinaryDecoder(QWidget):
         self.show()
 
     def translateData(self):
-        text = self.textEdit.toPlainText()
-        self.binaryEdit.setText(toStrFrBin(str(text)))
+        self.text = self.textEdit.toPlainText()
+        self.translatedText = toStrFrBin(str(self.text))
+        self.binaryEdit.setText(self.translatedText)
         
     def keyPressEvent(self, k):
     
         if k.key() == self.binaryCopy:
             binaryEdit.copy(self)
-
+            copy(self.translatedText)
+           
         elif k.key() == self.binaryPaste:
-            binaryEdit.paste(self) 
+            binaryEdit.paste(self)
 
         elif k.key() == self.textCopy:
             textEdit.copy(self)
+            copy(self.translatedText)
 
         elif k.key() == self.textPaste:
             textEdit.paste(self)
+            
 
 if __name__ == '__main__':            
     app = QApplication(sys.argv)

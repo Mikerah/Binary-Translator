@@ -2,12 +2,15 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QTextEdit,QLabel, \
 QPushButton, QVBoxLayout, QShortcut
 from PyQt5.QtGui import QKeySequence
+from pyperclip import copy, paste
 from binary import toBinFrStr
 
 class BinaryTranslator(QWidget):
 
     def __init__(self):
         super().__init__()
+        
+        #self.clipboard = QApplication.clipboard()
         
         self.initUI()
         
@@ -27,7 +30,6 @@ class BinaryTranslator(QWidget):
         self.vbox.addWidget(self.binaryTitle)
         self.vbox.addWidget(self.binaryEdit)
         self.vbox.addWidget(self.translateButton)
-        
 
         self.setLayout(self.vbox)
         
@@ -41,22 +43,27 @@ class BinaryTranslator(QWidget):
         self.show()
 
     def translateData(self):
-        text = self.textEdit.toPlainText()
-        self.binaryEdit.setText(toBinFrStr(str(text)))
-       
+        self.text = self.textEdit.toPlainText()
+        self.translatedText = toBinFrStr(str(self.text))
+        self.binaryEdit.setText(self.translatedText)
+        
     def keyPresEvent(self, k):
         
         if k.key() == self.binaryCopy:
             binaryEdit.copy(self)
-
+            copy(self.translatedText)
+           
         elif k.key() == self.binaryPaste:
-            binaryEdit.paste(self) 
+            binaryEdit.paste(self)
+            
 
         elif k.key() == self.textCopy:
             textEdit.copy(self)
+            copy(self.translatedText) 
 
         elif k.key() == self.textPaste:
-            textEdit.paste(self)        
+            textEdit.paste(self)
+                      
             
 if __name__ == '__main__':
 
