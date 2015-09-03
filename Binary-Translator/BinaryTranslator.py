@@ -70,3 +70,4 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     bin = BinaryTranslator()
     sys.exit(app.exec_())
+    input('Press Enter')
